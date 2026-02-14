@@ -65,4 +65,37 @@ public class MarkService {
     public List<Mark> getMarksByFaculty(User faculty) {
         return markRepository.findBySubjectFaculty(faculty);
     }
+
+    private String calculateGrade(Double obtained, Double total) {
+        if (total == 0) return "F";
+        double percentage = (obtained / total) * 100;
+        if (percentage >= 85) return "O";
+        if (percentage >= 75) return "A+";
+        if (percentage >= 65) return "A";
+        if (percentage >= 55) return "B+";
+        if (percentage >= 50) return "B";
+        if (percentage >= 40) return "C";
+        return "F";
+    }
+
+    private String calculateStatus(User student, Subject subject, Double currentObtained, Double currentTotal,
+            Long currentMarkId) {
+        List<Mark> previousMarks = markRepository.findByStudent(student);
+        Double currentPercentage = (currentObtained / currentTotal) * 100;
+
+        Mark lastMark = previousMarks.stream()
+                .filter(m -> m.getSubject().getId().equals(subject.getId()))
+                .filter(m -> currentMarkId == null || !m.getId().equals(currentMarkId))
+                .sorted(Comparator.comparing(Mark::getId).reversed())
+                .findFirst()
+                .orElse(null);
+
+        if (lastMark == null) return "First Assessment";
+
+        Double lastPercentage = (lastMark.getObtainedMarks() / lastMark.getAssessment().getTotalMarks()) * 100;
+
+        if (currentPercentage > lastPercentage + 2) return "Improved";
+        if (currentPercentage < lastPercentage - 2) return "Declined";
+        return "Consistent";
+    }
 }

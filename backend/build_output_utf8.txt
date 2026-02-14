@@ -1,0 +1,57 @@
+﻿[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------< com.sapt:student-assessment-performance-tracker >-----------
+[INFO] Building student-assessment-performance-tracker 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ student-assessment-performance-tracker ---
+[INFO] Deleting D:\CDAC\SAPT\Student Assessment and Performance Tracker\Student Assessment and Performance Tracker\backend\target
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ student-assessment-performance-tracker ---
+[INFO] Copying 2 resources from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ student-assessment-performance-tracker ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 21 source files with javac [debug release 17] to target\classes
+[INFO] Annotation processing is enabled because one or more processors were found
+  on the class path. A future release of javac may disable annotation processing
+  unless at least one processor is specified by name (-processor), or a search
+  path is specified (--processor-path, --processor-module-path), or annotation
+  processing is enabled explicitly (-proc:only, -proc:full).
+  Use -Xlint:-options to suppress this message.
+  Use -proc:none to disable annotation processing.
+[INFO] /D:/CDAC/SAPT/Student Assessment and Performance Tracker/Student Assessment and Performance Tracker/backend/src/main/java/com/sapt/controller/MarkController.java: Some input files use or override a deprecated API.
+[INFO] /D:/CDAC/SAPT/Student Assessment and Performance Tracker/Student Assessment and Performance Tracker/backend/src/main/java/com/sapt/controller/MarkController.java: Recompile with -Xlint:deprecation for details.
+[INFO] -------------------------------------------------------------
+[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[ERROR] /D:/CDAC/SAPT/Student Assessment and Performance Tracker/Student Assessment and Performance Tracker/backend/src/main/java/com/sapt/service/MarkService.java:[47,23] cannot find symbol
+  symbol:   method calculateGrade(java.lang.Double,java.lang.Double)
+  location: class com.sapt.service.MarkService
+[ERROR] /D:/CDAC/SAPT/Student Assessment and Performance Tracker/Student Assessment and Performance Tracker/backend/src/main/java/com/sapt/service/MarkService.java:[51,17] cannot find symbol
+  symbol:   method calculateStatus(com.sapt.model.User,com.sapt.model.Subject,java.lang.Double,java.lang.Double,java.lang.Long)
+  location: class com.sapt.service.MarkService
+[INFO] 2 errors 
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.934 s
+[INFO] Finished at: 2026-02-14T21:53:32+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.11.0:compile (default-compile) on project student-assessment-performance-tracker: Compilation failure: Compilation failure: 
+[ERROR] /D:/CDAC/SAPT/Student Assessment and Performance Tracker/Student Assessment and Performance Tracker/backend/src/main/java/com/sapt/service/MarkService.java:[47,23] cannot find symbol
+[ERROR]   symbol:   method calculateGrade(java.lang.Double,java.lang.Double)
+[ERROR]   location: class com.sapt.service.MarkService
+[ERROR] /D:/CDAC/SAPT/Student Assessment and Performance Tracker/Student Assessment and Performance Tracker/backend/src/main/java/com/sapt/service/MarkService.java:[51,17] cannot find symbol
+[ERROR]   symbol:   method calculateStatus(com.sapt.model.User,com.sapt.model.Subject,java.lang.Double,java.lang.Double,java.lang.Long)
+[ERROR]   location: class com.sapt.service.MarkService
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
