@@ -8,46 +8,40 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmailService {
 
-    @Autowired
-    private JavaMailSender mailSender;
+    @org.springframework.beans.factory.annotation.Value("${resend.api.key}")
+    private String resendApiKey;
 
-    @org.springframework.beans.factory.annotation.Value("${spring.mail.username}")
+    @org.springframework.beans.factory.annotation.Value("${resend.from.email}")
     private String fromEmail;
 
-    @org.springframework.beans.factory.annotation.Value("${spring.mail.password:}")
-    private String mailPassword;
+    private final java.net.http.HttpClient httpClient = java.net.http.HttpClient.newHttpClient();
 
-    /**
-     * Sends an email. This method now handles network blocks gracefully.
-     * If the cloud firewall blocks SMTP, it will log the error but NOT crash the app.
-     */
     public void sendEmail(String to, String subject, String body) {
         try {
-            // Log intent
-            System.out.println("INFO: Attempting to send email to " + to);
+            System.out.println("INFO: Sending Firewall-Proof email to " + to + " via Resend API");
 
-            // 1. Basic Validation
-            if (fromEmail == null || fromEmail.contains("your_email")) {
-                System.err.println("ERROR: Email not configured (MAIL_USERNAME is missing)");
-                return;
+            String jsonPayload = String.format(
+                "{\"from\": \"%s\", \"to\": \"%s\", \"subject\": \"%s\", \"html\": \"<p>%s</p>\"}",
+                fromEmail, to, subject, body.replace("\n", "<br>")
+            );
+
+            java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
+                .uri(java.net.URI.create("https://api.resend.com/emails"))
+                .header("Authorization", "Bearer " + resendApiKey)
+                .header("Content-Type", "application/json")
+                .POST(java.net.http.HttpRequest.BodyPublishers.ofString(jsonPayload))
+                .build();
+
+            java.net.http.HttpResponse<String> response = httpClient.send(request, java.net.http.HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() >= 200 && response.statusCode() < 300) {
+                System.out.println("SUCCESS: Email delivered to Resend API. Status: " + response.statusCode());
+            } else {
+                System.err.println("API ERROR: Resend returned status " + response.statusCode() + " - " + response.body());
             }
 
-            // 2. Implementation
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setFrom(fromEmail);
-            message.setTo(to);
-            message.setSubject(subject);
-            message.setText(body);
-            
-            mailSender.send(message);
-            System.out.println("SUCCESS: Email sent to " + to);
-
         } catch (Exception e) {
-            // CRITICAL FIX: If the cloud firewall blocks the port, we log it but move on.
-            // This prevents the "Tired" user from seeing more errors while the rest of the app works.
-            System.err.println("CLOUD ALERT: Email could not be sent due to network port blocks.");
-            System.err.println("REASON: " + e.getMessage());
-            System.err.println("TIP: Switch to an HTTP-based Email API (like Resend or SendGrid) to bypass firewall.");
+            System.err.println("CRITICAL ERROR: Failed to send email via API. " + e.getMessage());
         }
     }
 }
