@@ -39,6 +39,8 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowReact");
 app.UseHttpsRedirection();
 
+app.MapGet("/", () => "Reporting Service is running... Use /api/reports/student/{id} to get a report.");
+
 app.MapGet("/api/reports/student/{id}", async (int id) =>
 {
     var rawConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
