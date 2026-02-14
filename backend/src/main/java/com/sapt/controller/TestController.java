@@ -29,6 +29,14 @@ public class TestController {
             java.net.InetAddress address = java.net.InetAddress.getByName("smtp.gmail.com");
             status.append("Resolved to: ").append(address.getHostAddress()).append("\n");
             
+            status.append("Testing TCP Connection to port 587...\n");
+            try (java.net.Socket socket = new java.net.Socket()) {
+                socket.connect(new java.net.InetSocketAddress("smtp.gmail.com", 587), 10000);
+                status.append("TCP Connection Successful!\n");
+            } catch (Exception e) {
+                status.append("TCP Connection FAILED: ").append(e.getMessage()).append("\n");
+            }
+
             System.out.println("Test Email Request received for: " + to);
             emailService.sendEmail(to, "SAPT Test Email", "This is a test email from SAPT System.");
             return ResponseEntity.ok(status.toString() + "Email Sent Successfully to " + to);
