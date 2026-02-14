@@ -18,8 +18,8 @@ public class EmailService {
             System.out.println("INFO: Sending Firewall-Proof email to " + to + " via Resend API");
 
             String jsonPayload = String.format(
-                "{\"from\": \"%s\", \"to\": \"%s\", \"subject\": \"%s\", \"html\": \"<p>%s</p>\"}",
-                fromEmail, to, subject, body.replace("\n", "<br>")
+                "{\"from\": \"%s\", \"to\": \"%s\", \"subject\": \"%s\", \"html\": \"%s\"}",
+                fromEmail, to, subject, body.replace("\"", "\\\"").replace("\n", "")
             );
 
             java.net.http.HttpRequest request = java.net.http.HttpRequest.newBuilder()
