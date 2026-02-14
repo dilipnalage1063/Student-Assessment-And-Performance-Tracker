@@ -222,7 +222,7 @@ const StudentDashboard = () => {
                     <p>Welcome back, {user?.name || 'Student'}</p>
                 </div>
                 <button className="download-report-btn" onClick={handleDownloadReport}>
-                    <FileText size={18} /> Download Academic Report [v2.0 Fixed]
+                    <FileText size={18} /> Download Academic Report
                 </button>
             </header>
 
@@ -427,7 +427,7 @@ const StudentDashboard = () => {
                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
                     >
                         <Download size={16} />
-                        Download Report (PDF) [v2.0 Fixed]
+                        Download Report (PDF)
                     </button>
                 </div>
                 <div className="marks-table-container">
