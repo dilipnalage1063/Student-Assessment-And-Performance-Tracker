@@ -11,10 +11,14 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @org.springframework.beans.factory.annotation.Value("${spring.mail.port}")
+    private String mailPort;
+
     @org.springframework.beans.factory.annotation.Value("${spring.mail.username}")
     private String fromEmail;
 
     public void sendEmail(String to, String subject, String body) {
+        System.out.println("DEBUG: Sending email via port: " + mailPort);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom(fromEmail);
         message.setTo(to);
