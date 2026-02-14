@@ -23,13 +23,18 @@ public class TestController {
 
     @GetMapping("/email")
     public ResponseEntity<String> testEmail(@RequestParam String to) {
+        StringBuilder status = new StringBuilder();
         try {
+            status.append("Checking DNS for smtp.gmail.com...\n");
+            java.net.InetAddress address = java.net.InetAddress.getByName("smtp.gmail.com");
+            status.append("Resolved to: ").append(address.getHostAddress()).append("\n");
+            
             System.out.println("Test Email Request received for: " + to);
-            emailService.sendEmail(to, "SAPT Test Email", "This is a test email from SAPT System to verify configuration.");
-            return ResponseEntity.ok("Email Sent Successfully to " + to);
+            emailService.sendEmail(to, "SAPT Test Email", "This is a test email from SAPT System.");
+            return ResponseEntity.ok(status.toString() + "Email Sent Successfully to " + to);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Email Failed: " + e.getMessage() + "\n\nStack Trace:\n" + e.toString());
+            return ResponseEntity.status(500).body(status.toString() + "Email Failed: " + e.getMessage() + "\n\nStack Trace:\n" + e.toString());
         }
     }
 
