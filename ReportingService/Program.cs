@@ -53,7 +53,7 @@ app.MapGet("/api/reports/student/{id}", async (int id) =>
     string connectionString = rawConnectionString;
     if (!connectionString.Contains("SslMode", StringComparison.OrdinalIgnoreCase))
     {
-        connectionString += ";SslMode=VerifyCA;"; 
+        connectionString += ";SslMode=Required;"; 
     }
 
     Console.WriteLine($"[INFO] Connecting to Database: {connectionString.Split(';').FirstOrDefault(p => p.StartsWith("Server"))}...");
