@@ -1,0 +1,436 @@
+/* ============================================
+   COMPLETE DARK MODE FIX - FINAL VERSION
+   This file fixes ALL visibility issues across the entire project
+   ============================================ */
+
+/* ===== GLOBAL RESETS ===== */
+* {
+    box-sizing: border-box;
+}
+
+/* ===== LIGHT MODE (DEFAULT) ===== */
+
+/* All backgrounds white, all text black */
+body,
+.admin-layout,
+.faculty-layout,
+.student-layout,
+.admin-content,
+.faculty-content,
+.student-content,
+.content-card,
+.stat-card,
+.subject-card,
+.assessment-card,
+.activity-section,
+.settings-card,
+.analysis-card,
+.modal-content,
+.login-card {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+/* All headings and text elements */
+h1, h2, h3, h4, h5, h6,
+p, span, label, div,
+.header-info h1,
+.header-info p,
+.card-header h2,
+.stat-label,
+.stat-value,
+.subject-info h3,
+.subject-info span,
+.activity-item h4,
+.activity-item p,
+.analysis-header h3,
+.student-name,
+.login-title,
+.login-subtitle {
+    color: #000000 !important;
+}
+
+/* Sidebar */
+.admin-sidebar,
+.faculty-sidebar,
+.student-sidebar {
+    background: #f8fafc !important;
+    border-right: 1px solid #e2e8f0 !important;
+}
+
+/* Navigation items */
+.nav-item {
+    color: #64748b !important;
+}
+
+.nav-item:hover {
+    background: #e2e8f0 !important;
+    color: #000000 !important;
+}
+
+.nav-item.active {
+    background: #dbeafe !important;
+    color: #1e40af !important;
+}
+
+/* Input fields - CRITICAL FIX */
+input,
+textarea,
+select,
+.search-bar input,
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 2px solid #cbd5e1 !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: #94a3b8 !important;
+    opacity: 0.8 !important;
+}
+
+/* Tables */
+table,
+.marks-table,
+.marks-entry-table table,
+.user-table {
+    background: #ffffff !important;
+}
+
+table th,
+.marks-table th,
+.marks-entry-table th,
+.user-table th {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+}
+
+table td,
+.marks-table td,
+.marks-entry-table td,
+.user-table td {
+    color: #000000 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+/* Search bars */
+.search-bar {
+    background: #f1f5f9 !important;
+}
+
+/* ===== DARK MODE ===== */
+
+[data-theme="dark"] body,
+[data-theme="dark"] .admin-layout,
+[data-theme="dark"] .faculty-layout,
+[data-theme="dark"] .student-layout {
+    background: #0a0f1e !important;
+}
+
+[data-theme="dark"] .admin-content,
+[data-theme="dark"] .faculty-content,
+[data-theme="dark"] .student-content {
+    background: #0a0f1e !important;
+}
+
+/* All cards and sections - DARK BACKGROUNDS */
+[data-theme="dark"] .content-card,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .subject-card,
+[data-theme="dark"] .assessment-card,
+[data-theme="dark"] .activity-section,
+[data-theme="dark"] .settings-card,
+[data-theme="dark"] .analysis-card,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .login-card,
+[data-theme="dark"] .top-student-item {
+    background: #1e293b !important;
+    color: #ffffff !important;
+    border-color: #475569 !important;
+}
+
+/* All text elements - WHITE TEXT */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] p,
+[data-theme="dark"] span,
+[data-theme="dark"] label,
+[data-theme="dark"] div,
+[data-theme="dark"] .header-info h1,
+[data-theme="dark"] .header-info p,
+[data-theme="dark"] .card-header h2,
+[data-theme="dark"] .stat-label,
+[data-theme="dark"] .stat-value,
+[data-theme="dark"] .subject-info h3,
+[data-theme="dark"] .subject-info span,
+[data-theme="dark"] .activity-item h4,
+[data-theme="dark"] .activity-item p,
+[data-theme="dark"] .analysis-header h3,
+[data-theme="dark"] .student-name,
+[data-theme="dark"] .login-title,
+[data-theme="dark"] .login-subtitle,
+[data-theme="dark"] .analysis-item label,
+[data-theme="dark"] .analysis-item span,
+[data-theme="dark"] .stat-label,
+[data-theme="dark"] .student-score {
+    color: #ffffff !important;
+}
+
+/* Secondary text - LIGHT GRAY */
+[data-theme="dark"] .nav-item,
+[data-theme="dark"] .subject-info span,
+[data-theme="dark"] .activity-item p,
+[data-theme="dark"] .student-score,
+[data-theme="dark"] .subject-code {
+    color: #cbd5e1 !important;
+}
+
+/* Sidebar - DARKER */
+[data-theme="dark"] .admin-sidebar,
+[data-theme="dark"] .faculty-sidebar,
+[data-theme="dark"] .student-sidebar {
+    background: #0f172a !important;
+    border-right: 1px solid #475569 !important;
+}
+
+/* Navigation items - DARK MODE */
+[data-theme="dark"] .nav-item:hover {
+    background: #334155 !important;
+    color: #ffffff !important;
+}
+
+[data-theme="dark"] .nav-item.active {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+/* Input fields - CRITICAL DARK MODE FIX */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select,
+[data-theme="dark"] .search-bar input,
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group select,
+[data-theme="dark"] .form-group textarea {
+    background: #334155 !important;
+    color: #ffffff !important;
+    border: 2px solid #64748b !important;
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: #cbd5e1 !important;
+    opacity: 0.7 !important;
+}
+
+/* Tables - DARK MODE */
+[data-theme="dark"] table,
+[data-theme="dark"] .marks-table,
+[data-theme="dark"] .marks-entry-table table,
+[data-theme="dark"] .user-table {
+    background: #1e293b !important;
+}
+
+[data-theme="dark"] table th,
+[data-theme="dark"] .marks-table th,
+[data-theme="dark"] .marks-entry-table th,
+[data-theme="dark"] .user-table th {
+    background: #0f172a !important;
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] table td,
+[data-theme="dark"] .marks-table td,
+[data-theme="dark"] .marks-entry-table td,
+[data-theme="dark"] .user-table td {
+    color: #ffffff !important;
+    border-bottom: 1px solid #475569 !important;
+}
+
+/* Search bars - DARK MODE */
+[data-theme="dark"] .search-bar {
+    background: #334155 !important;
+}
+
+/* Role selector - LOGIN PAGE */
+.role-selector {
+    background: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .role-selector {
+    background: #334155 !important;
+}
+
+.role-btn {
+    color: #64748b !important;
+}
+
+[data-theme="dark"] .role-btn {
+    color: #cbd5e1 !important;
+}
+
+.role-btn.active {
+    background: #ffffff !important;
+    color: #1e40af !important;
+}
+
+[data-theme="dark"] .role-btn.active {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+/* Buttons - keep primary colors but ensure visibility */
+button {
+    cursor: pointer;
+}
+
+.view-details-btn {
+    background: #ffffff !important;
+    color: #2563eb !important;
+    border: 2px solid #cbd5e1 !important;
+}
+
+[data-theme="dark"] .view-details-btn {
+    background: #0f172a !important;
+    color: #60a5fa !important;
+    border: 2px solid #475569 !important;
+}
+
+/* Logout button */
+.logout-btn {
+    color: #ef4444 !important;
+}
+
+.logout-btn:hover {
+    background: #fef2f2 !important;
+}
+
+[data-theme="dark"] .logout-btn:hover {
+    background: #7f1d1d !important;
+}
+
+/* Progress bars backgrounds */
+[data-theme="dark"] .progress-bar-container,
+[data-theme="dark"] .pass-rate-indicator {
+    background: #475569 !important;
+}
+
+/* Subject code badges */
+[data-theme="dark"] .subject-code {
+    background: #475569 !important;
+    color: #cbd5e1 !important;
+}
+
+/* Student rank badges */
+[data-theme="dark"] .student-rank {
+    background: #1e40af !important;
+    color: #ffffff !important;
+}
+
+/* Empty states */
+.empty-state {
+    color: #94a3b8 !important;
+}
+
+[data-theme="dark"] .empty-state {
+    color: #64748b !important;
+}
+
+/* Form labels */
+.form-group label {
+    color: #475569 !important;
+}
+
+[data-theme="dark"] .form-group label {
+    color: #f8fafc !important;
+}
+
+/* CSV upload section */
+.csv-upload-section {
+    background: #fef2f2 !important;
+    border-color: #f87171 !important;
+}
+
+[data-theme="dark"] .csv-upload-section {
+    background: #7f1d1d !important;
+    border-color: #dc2626 !important;
+}
+
+.csv-label {
+    background: #ffffff !important;
+    color: #ef4444 !important;
+}
+
+[data-theme="dark"] .csv-label {
+    background: #1e293b !important;
+    color: #f87171 !important;
+}
+
+/* Grade tags - keep their specific colors */
+.grade-tag.a {
+    background: #dcfce7 !important;
+    color: #166534 !important;
+}
+
+.grade-tag.b {
+    background: #dbeafe !important;
+    color: #1e40af !important;
+}
+
+.grade-tag.c {
+    background: #fef9c3 !important;
+    color: #854d0e !important;
+}
+
+.grade-tag.fail {
+    background: #fef2f2 !important;
+    color: #991b1b !important;
+}
+
+/* Ensure sidebar brand text is visible */
+.sidebar-brand span {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%) !important;
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
+
+/* Fix any remaining text that might be invisible */
+[data-theme="dark"] * {
+    color: inherit;
+}
+
+/* Override any conflicting styles */
+[data-theme="dark"] .content-card *:not(button):not(.grade-tag),
+[data-theme="dark"] .stat-card *:not(button),
+[data-theme="dark"] .subject-card *:not(button),
+[data-theme="dark"] .activity-section *:not(button) {
+    color: #ffffff !important;
+}
+
+/* Ensure all text in cards is white in dark mode */
+[data-theme="dark"] .content-card h1,
+[data-theme="dark"] .content-card h2,
+[data-theme="dark"] .content-card h3,
+[data-theme="dark"] .content-card p,
+[data-theme="dark"] .content-card span,
+[data-theme="dark"] .content-card label,
+[data-theme="dark"] .stat-card h1,
+[data-theme="dark"] .stat-card h2,
+[data-theme="dark"] .stat-card h3,
+[data-theme="dark"] .stat-card p,
+[data-theme="dark"] .stat-card span,
+[data-theme="dark"] .subject-card h1,
+[data-theme="dark"] .subject-card h2,
+[data-theme="dark"] .subject-card h3,
+[data-theme="dark"] .subject-card p,
+[data-theme="dark"] .subject-card span {
+    color: #ffffff !important;
+}

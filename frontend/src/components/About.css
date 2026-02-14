@@ -1,0 +1,229 @@
+.about-page {
+    padding: 80px 0;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    transition: background-color 0.3s ease;
+}
+
+[data-theme="dark"] .about-page {
+    background-color: #0f172a;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.about-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.about-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    letter-spacing: -0.05em;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .about-title {
+    color: #f8fafc;
+}
+
+.about-subtitle {
+    font-size: 1.25rem;
+    color: #64748b;
+    max-width: 600px;
+    margin: 0 auto;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .about-subtitle {
+    color: #cbd5e1;
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 5rem;
+}
+
+.about-step-card {
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    text-align: left;
+    background: rgba(255, 255, 255, 0.7);
+    transition: background-color 0.3s ease;
+}
+
+[data-theme="dark"] .about-step-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+}
+
+.step-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .step-icon {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.about-step-card h3 {
+    font-size: 1.5rem;
+    color: #0f172a;
+    margin-bottom: 1rem;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .about-step-card h3 {
+    color: #f8fafc;
+}
+
+.about-step-card p {
+    color: #64748b;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .about-step-card p {
+    color: #cbd5e1;
+}
+
+.about-guide {
+    padding: 4rem;
+    border-radius: 2rem;
+    margin-bottom: 4rem;
+    background: rgba(255, 255, 255, 0.8);
+    transition: background 0.3s ease;
+}
+
+[data-theme="dark"] .about-guide {
+    background: #1e293b;
+    border: 1px solid #334155;
+}
+
+.about-guide h2 {
+    font-size: 2.25rem;
+    color: #0f172a;
+    margin-bottom: 3rem;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .about-guide h2 {
+    color: #f8fafc;
+}
+
+.guide-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.guide-item {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.step-num {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    background: #2563eb;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.25rem;
+    box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.4);
+}
+
+.guide-item h4 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .guide-item h4 {
+    color: #f8fafc;
+}
+
+.guide-item p {
+    color: #64748b;
+    line-height: 1.6;
+    transition: color 0.3s ease;
+}
+
+[data-theme="dark"] .guide-item p {
+    color: #cbd5e1;
+}
+
+.about-footer {
+    text-align: center;
+}
+
+.back-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    color: #1e293b;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .back-home-btn {
+    background-color: #1e293b;
+    color: #f8fafc;
+    border-color: #334155;
+}
+
+.back-home-btn:hover {
+    background-color: #f8fafc;
+    transform: translateX(-5px);
+    color: #2563eb;
+    border-color: #2563eb33;
+}
+
+[data-theme="dark"] .back-home-btn:hover {
+    background-color: #334155;
+    color: #60a5fa;
+}
+
+@media (max-width: 768px) {
+    .about-title {
+        font-size: 2.5rem;
+    }
+
+    .about-guide {
+        padding: 2rem;
+    }
+
+    .guide-item {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
