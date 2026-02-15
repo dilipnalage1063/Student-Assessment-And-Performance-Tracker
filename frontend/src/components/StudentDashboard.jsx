@@ -12,7 +12,9 @@ import {
     ArrowLeft,
     FileText,
     Clock,
-    Download
+    Download,
+    Menu,
+    X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL, endpoints } from '../apiConfig';
@@ -37,6 +39,7 @@ const StudentDashboard = () => {
 
     // Classroom States
     const [activeTab, setActiveTab] = useState('overview');
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [enrolledSubjects, setEnrolledSubjects] = useState([]);
     const [selectedSubject, setSelectedSubject] = useState(null);
     const [subjectAssessments, setSubjectAssessments] = useState([]);
@@ -588,7 +591,18 @@ const StudentDashboard = () => {
 
     return (
         <div className="student-layout">
-            <aside className="student-sidebar">
+            {/* Mobile Dashboard Header */}
+            <header className="mobile-dashboard-header">
+                <div className="mobile-logo">
+                    <GraduationCap size={24} />
+                    <span>SAPT STUDENT</span>
+                </div>
+                <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                    {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </header>
+
+            <aside className={`student-sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
                 <div
                     className="sidebar-brand"
                     onClick={() => navigate('/login')}

@@ -15,7 +15,8 @@ import {
     Download,
     Edit2,
     Trash2,
-    X
+    X,
+    Menu
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,6 +27,7 @@ const FacultyDashboard = () => {
     const baseUrl = API_BASE_URL;
     const [activeTab, setActiveTab] = useState('subjects');
     const [subjects, setSubjects] = useState([]);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [assessments, setAssessments] = useState([]);
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -484,7 +486,18 @@ const FacultyDashboard = () => {
 
     return (
         <div className="faculty-layout">
-            <aside className="faculty-sidebar">
+            {/* Mobile Header */}
+            <header className="mobile-dashboard-header">
+                <div className="mobile-logo">
+                    <GraduationCap size={24} />
+                    <span>SAPT FACULTY</span>
+                </div>
+                <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                    {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </header>
+
+            <aside className={`faculty-sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
                 <div
                     className="sidebar-brand"
                     onClick={() => navigate('/login')}

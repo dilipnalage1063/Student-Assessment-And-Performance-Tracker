@@ -15,7 +15,9 @@ import {
     Calendar,
     Upload,
     FileText,
-    Download
+    Download,
+    Menu,
+    X
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
@@ -49,6 +51,7 @@ const AdminDashboard = () => {
     // Subject Modal state
     const [showSubjectModal, setShowSubjectModal] = useState(false);
     const [editingSubject, setEditingSubject] = useState(null);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [subjectFormData, setSubjectFormData] = useState({
         name: '',
         code: '',
@@ -856,8 +859,19 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-container">
+            {/* Mobile Header */}
+            <header className="mobile-dashboard-header">
+                <div className="mobile-logo">
+                    <GraduationCap size={24} />
+                    <span>SAPT ADMIN</span>
+                </div>
+                <button className="menu-toggle" onClick={() => setSidebarOpen(!sidebarOpen)}>
+                    {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
+                </button>
+            </header>
+
             {/* Sidebar */}
-            <aside className="sidebar">
+            <aside className={`sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
                 <div
                     className="sidebar-logo"
                     onClick={() => navigate('/login')}
