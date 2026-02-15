@@ -92,4 +92,5 @@ A comprehensive web application designed to track, manage, and analyze student a
 **Vinit Darade**
 - [GitHub](https://github.com/VinitDarade12)
 - [LinkedIn](https://www.linkedin.com/in/vinitdarade/)
+  
 *Developed as part of the CDAC Project Curriculum.*
