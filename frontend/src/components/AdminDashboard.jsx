@@ -870,6 +870,11 @@ const AdminDashboard = () => {
                 </button>
             </header>
 
+            {/* Sidebar Overlay */}
+            {sidebarOpen && (
+                <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+            )}
+
             {/* Sidebar */}
             <aside className={`sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
                 <div

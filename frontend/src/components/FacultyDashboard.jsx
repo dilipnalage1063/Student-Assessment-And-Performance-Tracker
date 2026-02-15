@@ -497,6 +497,11 @@ const FacultyDashboard = () => {
                 </button>
             </header>
 
+            {/* Sidebar Overlay */}
+            {sidebarOpen && (
+                <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+            )}
+
             <aside className={`faculty-sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
                 <div
                     className="sidebar-brand"

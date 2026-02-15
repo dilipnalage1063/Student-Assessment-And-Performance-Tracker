@@ -239,3 +239,13 @@
         height: 40px;
     }
 }
+@media (max-width: 480px) {
+    .login-page { padding: 1rem; }
+    .login-container { padding: 0; }
+    .login-card { padding: 1.5rem; border-radius: 1.5rem; gap: 1.5rem; }
+    .login-logo { margin-bottom: 1rem; }
+    .login-logo svg { width: 32px; height: 32px; }
+    .login-title { font-size: 1.5rem; }
+    .login-subtitle { font-size: 0.9rem; }
+    .role-btn { padding: 0.5rem; font-size: 0.85rem; }
+}
