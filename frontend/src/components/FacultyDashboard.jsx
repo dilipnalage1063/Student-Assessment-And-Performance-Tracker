@@ -109,8 +109,8 @@ const FacultyDashboard = () => {
         if (percentage >= 75) return 'A';
         if (percentage >= 60) return 'B';
         if (percentage >= 50) return 'C';
-        if (percentage < 40) return 'Fail';
-        return 'D';
+        if (percentage >= 40) return 'D';
+        return 'F';
     };
 
     const saveStudentMark = async (student) => {
@@ -376,7 +376,7 @@ const FacultyDashboard = () => {
             acc[subjectId].totalObtained += report.obtainedMarks;
             acc[subjectId].totalMax += report.assessment.totalMarks;
             acc[subjectId].count += 1;
-            if (report.grade !== 'Fail') acc[subjectId].passCount += 1;
+            if (report.grade !== 'F') acc[subjectId].passCount += 1;
             return acc;
         }, {});
 
@@ -474,7 +474,7 @@ const FacultyDashboard = () => {
                             <div className="summary-item">
                                 <span className="stat-label">Overall Passing Rate</span>
                                 <span className="stat-value">
-                                    {((performanceData.filter(r => r.grade !== 'Fail').length / performanceData.length) * 100).toFixed(1)}%
+                                    {((performanceData.filter(r => r.grade !== 'F').length / performanceData.length) * 100).toFixed(1)}%
                                 </span>
                             </div>
                         </div>
