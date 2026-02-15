@@ -996,12 +996,13 @@
         display: flex;
     }
 
-    .sidebar {
+        .sidebar {
         left: -100%;
         width: 260px;
         transition: left 0.3s ease;
         padding-top: 5rem;
         position: fixed;
+        z-index: 1001; /* Ensure above overlay */
     }
 
     .sidebar.mobile-open {
@@ -1043,7 +1044,7 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(2px);
+    
     z-index: 999;
     animation: fadeIn 0.2s ease-out;
 }
@@ -1052,3 +1053,4 @@
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
