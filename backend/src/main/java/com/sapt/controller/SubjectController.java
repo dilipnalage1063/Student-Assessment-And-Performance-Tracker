@@ -31,6 +31,17 @@ public class SubjectController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private com.sapt.repository.ActivityLogRepository activityLogRepository;
+
+    private void logActivity(String title, String desc, String status) {
+        try {
+            activityLogRepository.save(new com.sapt.model.ActivityLog(title, desc, status));
+        } catch (Exception e) {
+            System.err.println("Failed to log activity: " + e.getMessage());
+        }
+    }
+
     @GetMapping
     public List<Subject> getAllSubjects() {
         return subjectRepository.findAll();
@@ -45,7 +56,9 @@ public class SubjectController {
 
     @PostMapping
     public Subject createSubject(@RequestBody Subject subject) {
-        return subjectRepository.save(subject);
+        Subject savedSubject = subjectRepository.save(subject);
+        logActivity("New Subject Added", savedSubject.getName() + " (" + savedSubject.getCode() + ") added", "success");
+        return savedSubject;
     }
 
     @PutMapping("/{id}")
@@ -57,10 +70,12 @@ public class SubjectController {
         subject.setName(subjectDetails.getName());
         subject.setCode(subjectDetails.getCode());
         subject.setYear(subjectDetails.getYear());
-        subject.setSemester(subjectDetails.getSemester());
+        // Semester removed as requested
         subject.setFaculty(subjectDetails.getFaculty());
 
-        return ResponseEntity.ok(subjectRepository.save(subject));
+        Subject saved = subjectRepository.save(subject);
+        logActivity("Subject Updated", saved.getName() + " modified", "success");
+        return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
@@ -70,6 +85,7 @@ public class SubjectController {
             return ResponseEntity.notFound().build();
 
         subjectRepository.delete(subject);
+        logActivity("Subject Deleted", subject.getName() + " removed", "warning");
         return ResponseEntity.noContent().build();
     }
 
@@ -175,6 +191,7 @@ public class SubjectController {
             response.put("successCount", successCount);
             response.put("failureCount", failureCount);
             response.put("errors", errors);
+            logActivity("Bulk Student Enrollment", "Enrolled " + successCount + " students in " + subject.getName(), "success");
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {

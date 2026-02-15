@@ -4,10 +4,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-    /* Optimized background */
+    background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
     padding: 2rem;
-    transition: background-color 0.3s ease;
 }
 
 .login-overlay {
@@ -16,10 +16,13 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(30, 58, 138, 0.4);
-    /* Blueish overlay */
-    backdrop-filter: blur(8px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.7) 100%);
     z-index: 1;
+    transition: background 0.5s ease;
+}
+
+[data-theme="dark"] .login-overlay {
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.8) 100%);
 }
 
 .login-container {

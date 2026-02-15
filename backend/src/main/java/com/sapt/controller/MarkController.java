@@ -30,9 +30,22 @@ public class MarkController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private com.sapt.repository.ActivityLogRepository activityLogRepository;
+
+    private void logActivity(String title, String desc, String status) {
+        try {
+            activityLogRepository.save(new com.sapt.model.ActivityLog(title, desc, status));
+        } catch (Exception e) {
+            System.err.println("Failed to log activity: " + e.getMessage());
+        }
+    }
+
     @PostMapping
     public Mark enterMark(@RequestBody Mark mark) {
-        return markService.saveMark(mark);
+        Mark savedMark = markService.saveMark(mark);
+        logActivity("Marks Entered", "Marks for " + savedMark.getStudent().getName() + " added", "success");
+        return savedMark;
     }
 
     @GetMapping("/student/{studentId}")
@@ -102,6 +115,7 @@ public class MarkController {
             response.put("successCount", successCount);
             response.put("failureCount", failureCount);
             response.put("errors", errors);
+            logActivity("Bulk Marks Upload", "Imported " + successCount + " mark records", "success");
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {

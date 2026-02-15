@@ -30,6 +30,17 @@ public class UserController {
     @Autowired
     private com.sapt.repository.MarkRepository markRepository;
 
+    @Autowired
+    private com.sapt.repository.ActivityLogRepository activityLogRepository;
+
+    private void logActivity(String title, String desc, String status) {
+        try {
+            activityLogRepository.save(new com.sapt.model.ActivityLog(title, desc, status));
+        } catch (Exception e) {
+            System.err.println("Failed to log activity: " + e.getMessage());
+        }
+    }
+
     @GetMapping
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -42,7 +53,9 @@ public class UserController {
 
     @PostMapping
     public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        logActivity("New User Created", savedUser.getName() + " (" + savedUser.getRole() + ") added", "success");
+        return savedUser;
     }
 
     @GetMapping("/{id}")
@@ -76,6 +89,7 @@ public class UserController {
         }
 
         User updatedUser = userRepository.save(user);
+        logActivity("User Updated", updatedUser.getName() + " modified", "success");
         return ResponseEntity.ok(updatedUser);
     }
 
@@ -106,6 +120,7 @@ public class UserController {
         markRepository.deleteAll(studentMarks);
 
         userRepository.delete(user);
+        logActivity("User Deleted", user.getName() + " removed", "warning");
         return ResponseEntity.noContent().build();
     }
 
@@ -146,6 +161,7 @@ public class UserController {
             response.put("successCount", successCount);
             response.put("failureCount", failureCount);
             response.put("errors", errors);
+            logActivity("Bulk User Upload", "Imported " + successCount + " users", "success");
             return ResponseEntity.ok(response);
 
         } catch (Exception e) {

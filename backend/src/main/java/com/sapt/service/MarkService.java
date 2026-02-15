@@ -69,12 +69,10 @@ public class MarkService {
     private String calculateGrade(Double obtained, Double total) {
         if (total == 0) return "F";
         double percentage = (obtained / total) * 100;
-        if (percentage >= 85) return "O";
-        if (percentage >= 75) return "A+";
-        if (percentage >= 65) return "A";
-        if (percentage >= 55) return "B+";
-        if (percentage >= 50) return "B";
-        if (percentage >= 40) return "C";
+        if (percentage >= 75) return "A";
+        if (percentage >= 60) return "B";
+        if (percentage >= 50) return "C";
+        if (percentage >= 40) return "D";
         return "F";
     }
 

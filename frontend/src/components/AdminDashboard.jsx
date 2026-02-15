@@ -53,7 +53,6 @@ const AdminDashboard = () => {
         name: '',
         code: '',
         year: '2024',
-        semester: '1st',
         facultyId: ''
     });
 
@@ -69,20 +68,23 @@ const AdminDashboard = () => {
     });
 
     // Dynamic Activities state
-    const [systemActivities, setSystemActivities] = useState(() => {
-        const saved = localStorage.getItem('systemActivities');
-        return saved ? JSON.parse(saved) : [
-            { title: 'Database Backup', desc: 'Successfully completed at 02:00 AM', status: 'success', timestamp: new Date().getTime() },
-            { title: 'Server Load', desc: '99.9% Uptime Maintained', status: 'success', timestamp: new Date().getTime() },
-            { title: 'System Initialization', desc: 'Admin Dashboard linked to database', status: 'success', timestamp: new Date().getTime() }
-        ];
-    });
+    const [systemActivities, setSystemActivities] = useState([]);
 
-    const addActivity = (title, desc, status) => {
-        const newActivity = { title, desc, status, timestamp: new Date().getTime() };
-        const updatedActivities = [newActivity, ...systemActivities.slice(0, 4)]; // Keep last 5
-        setSystemActivities(updatedActivities);
-        localStorage.setItem('systemActivities', JSON.stringify(updatedActivities));
+    const fetchActivities = async () => {
+        try {
+            const response = await fetch(`${baseUrl}/api/activities`);
+            if (response.ok) {
+                const data = await response.json();
+                setSystemActivities(data.map(a => ({
+                    title: a.title,
+                    desc: a.description,
+                    status: a.status,
+                    timestamp: a.timestamp
+                })));
+            }
+        } catch (error) {
+            console.error('Error fetching activities:', error);
+        }
     };
 
     const baseUrl = API_BASE_URL;
@@ -92,6 +94,10 @@ const AdminDashboard = () => {
     useEffect(() => {
         fetchUsers();
         fetchSubjects();
+        fetchActivities();
+        // Set up interval for real-time updates
+        const interval = setInterval(fetchActivities, 10000); // every 10 seconds
+        return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
@@ -170,11 +176,7 @@ const AdminDashboard = () => {
                 setEditingUser(null);
                 setUserFormData({ name: '', role: 'Student', department: '-', email: '', parentsEmail: '', parentsMobile: '', username: '', password: '' });
                 fetchUsers();
-                addActivity(
-                    editingUser ? 'User Updated' : 'New User Created',
-                    `${userFormData.name} (${userFormData.role}) has been ${editingUser ? 'modified' : 'added'}`,
-                    'success'
-                );
+                fetchActivities();
             } else {
                 const errorText = await response.text();
                 alert('Failed to save user: ' + errorText);
@@ -192,11 +194,7 @@ const AdminDashboard = () => {
                 if (response.ok) {
                     const deletedUser = users.find(u => u.id === id);
                     fetchUsers();
-                    addActivity(
-                        'User Deleted',
-                        `${deletedUser?.name || 'A user'} has been removed from the system`,
-                        'warning'
-                    );
+                    fetchActivities();
                 }
             } catch (error) {
                 console.error('Error deleting user:', error);
@@ -234,11 +232,7 @@ const AdminDashboard = () => {
                 setEditingSubject(null);
                 setSubjectFormData({ name: '', code: '', year: '2024', semester: '1st', facultyId: '' });
                 fetchSubjects();
-                addActivity(
-                    editingSubject ? 'Subject Updated' : 'New Subject Added',
-                    `${subjectFormData.name} (${subjectFormData.code}) has been ${editingSubject ? 'modified' : 'added'}`,
-                    'success'
-                );
+                fetchActivities();
             } else {
                 const errorText = await response.text();
                 alert('Failed to save subject: ' + errorText);
@@ -302,7 +296,7 @@ const AdminDashboard = () => {
                 alert(`Bulk upload successful!\nSuccess: ${result.successCount}\nFailures: ${result.failureCount}`);
                 setUploadFile(null);
                 fetchUsers();
-                addActivity('Bulk User Upload', `Imported ${result.successCount} users from CSV`, 'success');
+                fetchActivities();
             } else {
                 alert('Upload failed: ' + (result.message || 'Unknown error'));
             }
@@ -335,7 +329,7 @@ const AdminDashboard = () => {
                 alert(`Bulk enrollment successful!\nSuccess: ${result.successCount}\nFailures: ${result.failureCount}`);
                 setUploadFile(null);
                 fetchSubjectStudents(selectedSubjectId);
-                addActivity('Bulk Student Enrollment', `Enrolled ${result.successCount} students in subject`, 'success');
+                fetchActivities();
             } else {
                 alert('Upload failed: ' + (result.message || 'Unknown error'));
             }
@@ -349,12 +343,31 @@ const AdminDashboard = () => {
 
     const downloadUserTemplate = () => {
         const headers = "name,role,department,email,parentsEmail,parentsMobile,username,password";
-        const sampleData = "John Doe,Student,Science,john@example.com,parent@example.com,9876543210,johndoe,pass123";
-        const csvContent = "data:text/csv;charset=utf-8," + headers + "\n" + sampleData;
+        let csvContent = "data:text/csv;charset=utf-8," + headers + "\n";
+
+        // Use real data if available
+        if (users && users.length > 0) {
+            users.forEach(u => {
+                const row = [
+                    u.name,
+                    u.role,
+                    u.department || '-',
+                    u.email,
+                    u.parentsEmail || '-',
+                    u.parentsMobile || '-',
+                    u.username,
+                    '******' // Obfuscate password for privacy
+                ].join(",");
+                csvContent += row + "\n";
+            });
+        } else {
+            csvContent += "John Doe,Student,Science,john@example.com,parent@example.com,9876543210,johndoe,pass123";
+        }
+
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
-        link.setAttribute("download", "user_template.csv");
+        link.setAttribute("download", "user_data_export.csv");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -409,7 +422,7 @@ const AdminDashboard = () => {
 
     const openAddSubjectModal = () => {
         setEditingSubject(null);
-        setSubjectFormData({ name: '', code: '', year: '2024', semester: '1st', facultyId: '' });
+        setSubjectFormData({ name: '', code: '', year: '2024', facultyId: '' });
         setShowSubjectModal(true);
     };
 
@@ -419,7 +432,6 @@ const AdminDashboard = () => {
             name: subject.name,
             code: subject.code,
             year: subject.year,
-            semester: subject.semester,
             facultyId: subject.faculty ? subject.faculty.id.toString() : ''
         });
         setShowSubjectModal(true);
@@ -688,7 +700,7 @@ const AdminDashboard = () => {
                                 <th>ID</th>
                                 <th>Subject Name</th>
                                 <th>Code</th>
-                                <th>Year/Sem</th>
+                                <th>Year</th>
                                 <th>Assigned Faculty</th>
                                 <th>Action</th>
                             </tr>
@@ -699,7 +711,7 @@ const AdminDashboard = () => {
                                     <td>#{subject.id}</td>
                                     <td>{subject.name}</td>
                                     <td>{subject.code}</td>
-                                    <td>{subject.year} / {subject.semester}</td>
+                                    <td>{subject.year}</td>
                                     <td>{subject.faculty ? subject.faculty.name : <span className="unassigned">Unassigned</span>}</td>
                                     <td className="actions">
                                         <button className="edit-btn" onClick={() => openEditSubjectModal(subject)}>
@@ -1047,19 +1059,6 @@ const AdminDashboard = () => {
                                         onChange={handleSubjectInputChange}
                                         required
                                     />
-                                </div>
-                                <div className="form-group">
-                                    <label>Semester</label>
-                                    <select name="semester" value={subjectFormData.semester} onChange={handleSubjectInputChange}>
-                                        <option value="1st">1st Semester</option>
-                                        <option value="2nd">2nd Semester</option>
-                                        <option value="3rd">3rd Semester</option>
-                                        <option value="4th">4th Semester</option>
-                                        <option value="5th">5th Semester</option>
-                                        <option value="6th">6th Semester</option>
-                                        <option value="7th">7th Semester</option>
-                                        <option value="8th">8th Semester</option>
-                                    </select>
                                 </div>
                                 <div className="form-group">
                                     <label>Assign Faculty</label>

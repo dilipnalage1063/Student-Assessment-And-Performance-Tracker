@@ -193,7 +193,7 @@ const StudentDashboard = () => {
     const calculateRequiredScore = () => {
         if (stats.examCount === 0) return null;
 
-        const thresholds = { 'A': 75, 'B': 60, 'C': 50 };
+        const thresholds = { 'A': 75, 'B': 60, 'C': 50, 'D': 40 };
         const targetPercent = thresholds[targetGrade] / 100;
 
         // Filter marks if a specific subject is selected
@@ -251,6 +251,7 @@ const StudentDashboard = () => {
                                     <option value="A">Grade A (75%+)</option>
                                     <option value="B">Grade B (60%+)</option>
                                     <option value="C">Grade C (50%+)</option>
+                                    <option value="D">Grade D (40%+)</option>
                                 </select>
                             </div>
                             <div className="control-group">
@@ -416,19 +417,8 @@ const StudentDashboard = () => {
             </header>
 
             <div className="content-card fade-in">
-                <div className="card-header flex justify-between items-center">
+                <div className="card-header">
                     <h2>Academic Record</h2>
-                    <button
-                        onClick={() => {
-                            if (user?.id) {
-                                handleDownloadReport();
-                            }
-                        }}
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 text-sm font-medium transition-colors"
-                    >
-                        <Download size={16} />
-                        Download Report (PDF)
-                    </button>
                 </div>
                 <div className="marks-table-container">
                     {loading ? (
