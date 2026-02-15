@@ -24,6 +24,13 @@ public class AssessmentController {
     @Autowired
     private com.sapt.repository.SubjectRepository subjectRepository;
 
+    @Autowired
+    private com.sapt.service.ActivityService activityService;
+
+    private void logActivity(String title, String desc, String status) {
+        activityService.logActivity(title, desc, status);
+    }
+
     @GetMapping
     public List<Assessment> getAllAssessments() {
         return assessmentRepository.findAll();
@@ -40,6 +47,7 @@ public class AssessmentController {
             if (f != null) assessment.setFaculty(f);
         }
         Assessment saved = assessmentRepository.save(assessment);
+        logActivity("New Assessment Created", saved.getName() + " added", "success");
         return ResponseEntity.ok(saved);
     }
 
@@ -65,7 +73,9 @@ public class AssessmentController {
     public ResponseEntity<?> deleteAssessment(@PathVariable Long id) {
         return assessmentRepository.findById(id)
                 .map(assessment -> {
+                    String name = assessment.getName();
                     assessmentRepository.delete(assessment);
+                    logActivity("Assessment Deleted", name + " removed", "warning");
                     return ResponseEntity.ok().build();
                 }).orElse(ResponseEntity.notFound().build());
     }
@@ -79,6 +89,7 @@ public class AssessmentController {
                     assessment.setDate(assessmentDetails.getDate());
                     assessment.setType(assessmentDetails.getType());
                     Assessment updatedAssessment = assessmentRepository.save(assessment);
+                    logActivity("Assessment Updated", updatedAssessment.getName() + " modified", "success");
                     return ResponseEntity.ok(updatedAssessment);
                 }).orElse(ResponseEntity.notFound().build());
     }

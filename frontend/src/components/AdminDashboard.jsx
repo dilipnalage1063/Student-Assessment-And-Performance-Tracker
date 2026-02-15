@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 import { API_BASE_URL } from '../apiConfig';
 import {
     GraduationCap,
@@ -94,13 +96,45 @@ const AdminDashboard = () => {
     const API_URL = `${baseUrl}/api/users`;
     const SUBJECT_API_URL = `${baseUrl}/api/subjects`;
 
+    const stompClientRef = useRef(null);
+
     useEffect(() => {
         fetchUsers();
         fetchSubjects();
         fetchActivities();
-        // Set up interval for real-time updates
-        const interval = setInterval(fetchActivities, 10000); // every 10 seconds
-        return () => clearInterval(interval);
+
+        // WebSocket Setup
+        const socket = new SockJS(`${baseUrl}/ws-activity`);
+        const client = new Client({
+            webSocketFactory: () => socket,
+            onConnect: () => {
+                console.log('Connected to WebSocket');
+                client.subscribe('/topic/activities', (message) => {
+                    const newActivity = JSON.parse(message.body);
+                    setSystemActivities(prev => [
+                        {
+                            title: newActivity.title,
+                            desc: newActivity.description,
+                            status: newActivity.status,
+                            timestamp: newActivity.timestamp
+                        },
+                        ...prev.slice(0, 9) // Keep last 10
+                    ]);
+                });
+            },
+            onStompError: (frame) => {
+                console.error('STOMP error', frame.headers['message']);
+            }
+        });
+
+        client.activate();
+        stompClientRef.current = client;
+
+        return () => {
+            if (stompClientRef.current) {
+                stompClientRef.current.deactivate();
+            }
+        };
     }, []);
 
     useEffect(() => {

@@ -31,14 +31,10 @@ public class MarkController {
     private UserRepository userRepository;
 
     @Autowired
-    private com.sapt.repository.ActivityLogRepository activityLogRepository;
+    private com.sapt.service.ActivityService activityService;
 
     private void logActivity(String title, String desc, String status) {
-        try {
-            activityLogRepository.save(new com.sapt.model.ActivityLog(title, desc, status));
-        } catch (Exception e) {
-            System.err.println("Failed to log activity: " + e.getMessage());
-        }
+        activityService.logActivity(title, desc, status);
     }
 
     @PostMapping
