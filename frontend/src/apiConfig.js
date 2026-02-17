@@ -16,7 +16,9 @@ const getBaseUrl = () => {
     if (import.meta.env.VITE_API_BASE_URL) {
         return import.meta.env.VITE_API_BASE_URL;
     }
-    if (import.meta.env.MODE === 'production') {
+    // Check if we are in production
+    // Vite sets import.meta.env.PROD to true when running vite build
+    if (import.meta.env.PROD || import.meta.env.MODE === 'production') {
         return PROD_URL;
     }
     return LOCAL_URL;
