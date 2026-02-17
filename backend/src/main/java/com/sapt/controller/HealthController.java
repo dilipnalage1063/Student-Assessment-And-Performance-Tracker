@@ -16,7 +16,8 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class HealthController {
 
-    @Autowired
+    // Using Autowired(required=false) to prevent startup crash if DB beans fail
+    @Autowired(required = false)
     private UserRepository userRepository;
 
     @GetMapping("/")
@@ -41,17 +42,21 @@ public class HealthController {
         Map<String, Object> response = new HashMap<>();
         response.put("status", "UP");
         response.put("timestamp", LocalDateTime.now().toString());
+        response.put("note", "Basic health check passed. Checking database...");
         
-        try {
-            // Check if DB is reachable but don't fail the whole request if it's not
-            // This prevents Railway from killing the app if Aiven is slow/off
-            long userCount = userRepository.count();
-            response.put("database", "CONNECTED");
-            response.put("userCount", userCount);
-        } catch (Exception e) {
-            response.put("database", "DOWN");
-            response.put("warning", "Database connection failed. Please check if Aiven is Powered On.");
-            response.put("errorDetails", e.getMessage());
+        if (userRepository != null) {
+            try {
+                long userCount = userRepository.count();
+                response.put("database", "CONNECTED");
+                response.put("userCount", userCount);
+            } catch (Exception e) {
+                response.put("database", "DOWN");
+                response.put("warning", "Database connection failed. Please check Aiven Console.");
+                response.put("errorDetails", e.getMessage());
+            }
+        } else {
+            response.put("database", "UNKNOWN");
+            response.put("warning", "UserRepository bean not found. This usually happens if the DB connection failed during startup.");
         }
         
         return ResponseEntity.ok(response);
