@@ -9,11 +9,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("*") // Allow all origins for now to rule out CORS issues
-                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                .allowedHeaders("*")
-                .allowCredentials(false) // Set to true if you need cookies/auth headers, but origin cannot be * then
-                .maxAge(3600);
+        // Handled by CorsConfig.java
     }
 }
