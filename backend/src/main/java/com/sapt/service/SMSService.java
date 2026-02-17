@@ -22,7 +22,7 @@ public class SMSService {
     @PostConstruct
     public void init() {
         try {
-            if (!"ACxxxx".equals(accountSid) && accountSid != null && !accountSid.isEmpty()) {
+            if (accountSid != null && !accountSid.isEmpty() && !"ACxxxx".equals(accountSid) && !"your_sid".equals(accountSid)) {
                 Twilio.init(accountSid, authToken);
                 System.out.println("Twilio initialized with Account SID: " + accountSid);
             } else {
@@ -35,7 +35,7 @@ public class SMSService {
 
     public void sendSMS(String mobileNumber, String messageText) {
         try {
-            if ("ACxxxx".equals(accountSid)) {
+            if ("ACxxxx".equals(accountSid) || "your_sid".equals(accountSid) || accountSid == null || accountSid.isEmpty()) {
                 System.out.println("[MOCK SMS] To: " + mobileNumber + ", Msg: " + messageText);
                 return;
             }

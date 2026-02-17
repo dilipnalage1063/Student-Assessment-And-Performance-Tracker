@@ -31,5 +31,5 @@ export const endpoints = {
     users: `${API_BASE_URL}/api/users`,
     subjects: `${API_BASE_URL}/api/subjects`,
     // Reporting Service URL (Update this after deploying .NET service on Railway)
-    report: (studentId) => `${import.meta.env.VITE_REPORTING_URL || 'http://localhost:5036'}/api/reports/student/${studentId}`,
+    report: (studentId) => `${import.meta.env.VITE_REPORTING_URL || 'http://localhost:5174'}/api/reports/student/${studentId}`,
 };

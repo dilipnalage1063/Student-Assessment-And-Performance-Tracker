@@ -1,0 +1,20 @@
+
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+.idea/
+.vscode/
+*.iml
+*.log
+*.class
+
+# Inherit local secrets
+src/main/resources/application-secret.properties

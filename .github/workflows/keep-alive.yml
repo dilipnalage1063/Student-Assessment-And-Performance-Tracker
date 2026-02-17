@@ -1,0 +1,20 @@
+name: Keep Project Live
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Every 15 minutes
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Backend and Database
+        run: |
+          curl -f https://student-assessment-and-performance-tracker-production.up.railway.app/health || echo "Backend ping failed"
+      
+      - name: Ping Frontend (Placeholder - replace with your Vercel URL)
+        run: |
+          # If you have a live frontend URL, add it here like:
+          # curl -f https://your-frontend.vercel.app || echo "Frontend ping failed"
+          echo "Frontend ping step skipped. Please add your Vercel URL manually if needed."

@@ -571,7 +571,7 @@ const FacultyDashboard = () => {
                                         <div key={subject.id} className="subject-card">
                                             <div className="subject-info">
                                                 <h3>{subject.name}</h3>
-                                                <span>{subject.code} • {subject.semester} Semester</span>
+                                                <span>{subject.code}</span>
                                             </div>
                                             <button
                                                 className="view-details-btn"

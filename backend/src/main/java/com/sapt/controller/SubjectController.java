@@ -66,7 +66,6 @@ public class SubjectController {
         subject.setName(subjectDetails.getName());
         subject.setCode(subjectDetails.getCode());
         subject.setYear(subjectDetails.getYear());
-        // Semester removed as requested
         subject.setFaculty(subjectDetails.getFaculty());
 
         Subject saved = subjectRepository.save(subject);

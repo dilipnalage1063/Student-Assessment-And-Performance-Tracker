@@ -252,7 +252,6 @@ const AdminDashboard = () => {
             name: subjectFormData.name,
             code: subjectFormData.code,
             year: subjectFormData.year,
-            semester: subjectFormData.semester,
             faculty: subjectFormData.facultyId ? { id: parseInt(subjectFormData.facultyId) } : null
         };
 
@@ -267,7 +266,7 @@ const AdminDashboard = () => {
                 alert('Subject saved successfully!');
                 setShowSubjectModal(false);
                 setEditingSubject(null);
-                setSubjectFormData({ name: '', code: '', year: '2024', semester: '1st', facultyId: '' });
+                setSubjectFormData({ name: '', code: '', year: '2024', facultyId: '' });
                 fetchSubjects();
                 fetchActivities();
             } else {
@@ -398,7 +397,8 @@ const AdminDashboard = () => {
                 csvContent += row + "\n";
             });
         } else {
-            csvContent += "John Doe,Student,Science,john@example.com,parent@example.com,9876543210,johndoe,pass123";
+            alert('No users found in the system. Please add users first before exporting.');
+            return;
         }
 
         const encodedUri = encodeURI(csvContent);
@@ -412,8 +412,20 @@ const AdminDashboard = () => {
 
     const downloadEnrollTemplate = () => {
         const headers = "username";
-        const sampleData = "johndoe\njanedoe";
-        const csvContent = "data:text/csv;charset=utf-8," + headers + "\n" + sampleData;
+        let csvContent = "data:text/csv;charset=utf-8," + headers + "\n";
+
+        // Filter only students and export their usernames
+        const studentUsers = users.filter(u => u.role === 'Student');
+
+        if (studentUsers && studentUsers.length > 0) {
+            studentUsers.forEach(student => {
+                csvContent += student.username + "\n";
+            });
+        } else {
+            alert('No students found in the system. Please add students first before generating enrollment template.');
+            return;
+        }
+
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);

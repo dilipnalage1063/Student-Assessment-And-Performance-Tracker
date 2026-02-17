@@ -964,6 +964,201 @@
     border: none;
     color: white;
     cursor: pointer;
+    height: 28px;
+    background: #eff6ff;
+    color: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+[data-theme="dark"] .student-rank {
+    background: rgba(37, 99, 235, 0.1);
+    color: #60a5fa;
+}
+
+.student-info-mini {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.student-name {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .student-name {
+    color: #f8fafc;
+}
+
+/* Assessment Mini Card Fix */
+.assessment-mini-card {
+    background: var(--content-bg);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 140px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .assessment-mini-card {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.assessment-mini-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+}
+
+.assessment-mini-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .assessment-mini-card h3 {
+    color: #f8fafc;
+}
+
+.assessment-mini-card p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .assessment-mini-card p {
+    color: #94a3b8;
+}
+
+/* Assessment Grid Layout */
+.assessment-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Card Actions */
+.card-actions button {
+    transition: all 0.2s ease;
+    padding: 6px;
+    border-radius: 6px;
+}
+
+.card-actions button:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="dark"] .card-actions button:hover {
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Modal Buttons */
+.cancel-btn:hover {
+    background-color: #f1f5f9 !important;
+}
+
+[data-theme="dark"] .cancel-btn:hover {
+    background-color: #1e293b !important;
+    border-color: #475569 !important;
+    color: #f8fafc !important;
+}
+
+.delete-confirm-btn:hover {
+    background-color: #dc2626 !important;
+}
+
+.student-score {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .student-score {
+    color: #94a3b8;
+}
+
+.trend-icon {
+    color: #10b981;
+}
+
+.summary-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.summary-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+[data-theme="dark"] .stat-label {
+    color: #94a3b8;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .stat-value {
+    color: #f8fafc;
+}
+
+@media (max-width: 1024px) {
+    .report-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Mobile Header Wrapper */
+.mobile-dashboard-header {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #1e40af;
+    color: white;
+    padding: 0 1.5rem;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+}
+
+.mobile-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+}
+
+.menu-toggle {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1015,7 +1210,80 @@
         align-items: flex-start;
         gap: 1rem;
     }
+
+    /* Fix performance analysis cards */
+    .performance-card {
+        padding: 1.5rem;
+    }
+
+    .performance-card h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Fix modal on mobile */
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        margin: 1rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    /* Fix tables */
+    .marks-table-container {
+        overflow-x: auto;
+    }
+
+    .student-marks-table {
+        min-width: 600px;
+    }
 }
+
+@media (max-width: 480px) {
+    .faculty-content {
+        padding: 1rem;
+        padding-top: 4.5rem;
+    }
+
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .content-header p {
+        font-size: 0.875rem;
+    }
+
+    .performance-card {
+        padding: 1rem;
+    }
+
+    .performance-card h3 {
+        font-size: 1rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.6rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+
+    .subject-card h3 {
+        font-size: 1.1rem;
+    }
+}
+
 /* Sidebar Overlay Backdrop */
 .sidebar-overlay {
     position: fixed;
@@ -1024,13 +1292,17 @@
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.3);
-    
+
     z-index: 999;
     animation: fadeIn 0.2s ease-out;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+    from {
+        opacity: 0;
+    }
 
+    to {
+        opacity: 1;
+    }
+}

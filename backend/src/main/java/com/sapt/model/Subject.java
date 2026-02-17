@@ -18,7 +18,6 @@ public class Subject {
     private String name;
     private String code;
     private String year;
-    private String semester;
 
     @ManyToOne
     @JoinColumn(name = "faculty_id")

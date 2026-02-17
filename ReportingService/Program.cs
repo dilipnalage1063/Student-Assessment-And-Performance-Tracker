@@ -43,10 +43,10 @@ app.MapGet("/", () => "Reporting Service is running... Use /api/reports/student/
 
 app.MapGet("/api/reports/student/{id}", async (int id) =>
 {
-    var rawConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+    var rawConnectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") ?? app.Configuration["DB_CONNECTION_STRING"];
     if (string.IsNullOrEmpty(rawConnectionString))
     {
-        return Results.Problem("DB_CONNECTION_STRING environment variable is missing.");
+        return Results.Problem("DB_CONNECTION_STRING environment variable or configuration is missing.");
     }
 
     // Ensure we are compatible with Aiven's requirement but also don't fail on strict SSL verification if certs are missing in container

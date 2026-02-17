@@ -1220,3 +1220,125 @@
         opacity: 1;
     }
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .mobile-dashboard-header {
+        display: flex;
+    }
+
+    .student-sidebar {
+        left: -100%;
+        width: 280px;
+        transition: left 0.3s ease;
+        padding-top: 5rem;
+        position: fixed;
+        z-index: 1001;
+    }
+
+    .student-sidebar.mobile-open {
+        left: 0;
+    }
+
+    .student-content {
+        margin-left: 0;
+        padding: 1.5rem;
+        padding-top: 5rem;
+    }
+
+    .stats-grid,
+    .performance-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .content-card {
+        padding: 1rem;
+    }
+
+    .card-header h2 {
+        font-size: 1.25rem;
+    }
+
+    /* Fix performance cards */
+    .performance-card {
+        padding: 1.5rem;
+    }
+
+    .performance-card h3 {
+        font-size: 1.1rem;
+    }
+
+    /* Fix modal on mobile */
+    .modal-content {
+        width: 95%;
+        max-width: 95%;
+        margin: 1rem;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    /* Fix tables */
+    .marks-table-container {
+        overflow-x: auto;
+    }
+
+    .student-marks-table {
+        min-width: 600px;
+    }
+
+    /* Fix calculator */
+    .calculator-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .student-content {
+        padding: 1rem;
+        padding-top: 4.5rem;
+    }
+
+    .content-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .content-header p {
+        font-size: 0.875rem;
+    }
+
+    .performance-card {
+        padding: 1rem;
+    }
+
+    .performance-card h3 {
+        font-size: 1rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 0.6rem 1rem;
+        font-size: 0.875rem;
+    }
+
+    .modal-content {
+        padding: 1rem;
+    }
+
+    .subject-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .download-report-btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.875rem;
+    }
+}
