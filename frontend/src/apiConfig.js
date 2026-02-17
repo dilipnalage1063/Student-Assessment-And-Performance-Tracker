@@ -8,13 +8,21 @@ const PROD_URL = 'https://student-assessment-and-performance-tracker-production.
 const LOCAL_URL = 'http://localhost:8085';
 
 // Determine logic: 
-// 1. If VITE_API_BASE_URL is set, use it.
-// 2. If we are in production mode (import.meta.env.PROD), use PROD_URL.
+// 1. If VITE_API_BASE_URL is set AND NOT the old one, use it.
+// 2. Otherwise if we are in production mode, use PROD_URL.
 // 3. Otherwise use LOCAL_URL.
 
 const getBaseUrl = () => {
-    if (import.meta.env.VITE_API_BASE_URL) {
-        return import.meta.env.VITE_API_BASE_URL;
+    let envUrl = import.meta.env.VITE_API_BASE_URL;
+
+    // FIX: Ignore the old incorrect URL if it's stuck in Vercel env vars
+    if (envUrl && envUrl.includes('optimistic-solace')) {
+        console.warn('Ignoring old Vercel env var:', envUrl);
+        envUrl = null;
+    }
+
+    if (envUrl) {
+        return envUrl;
     }
     // Check if we are in production
     // Vite sets import.meta.env.PROD to true when running vite build
