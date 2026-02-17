@@ -39,19 +39,21 @@ public class HealthController {
     @GetMapping("/health")
     public ResponseEntity<?> health() {
         Map<String, Object> response = new HashMap<>();
-        try {
-            // Perform a lightweight DB query to keep Aiven active
-            long userCount = userRepository.count();
-            response.put("status", "UP");
-            response.put("database", "CONNECTED");
-            response.put("details", "Database reachable with " + userCount + " users.");
-        } catch (Exception e) {
-            response.put("status", "DOWN");
-            response.put("database", "DISCONNECTED");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(response);
-        }
+        response.put("status", "UP");
         response.put("timestamp", LocalDateTime.now().toString());
+        
+        try {
+            // Check if DB is reachable but don't fail the whole request if it's not
+            // This prevents Railway from killing the app if Aiven is slow/off
+            long userCount = userRepository.count();
+            response.put("database", "CONNECTED");
+            response.put("userCount", userCount);
+        } catch (Exception e) {
+            response.put("database", "DOWN");
+            response.put("warning", "Database connection failed. Please check if Aiven is Powered On.");
+            response.put("errorDetails", e.getMessage());
+        }
+        
         return ResponseEntity.ok(response);
     }
 }
