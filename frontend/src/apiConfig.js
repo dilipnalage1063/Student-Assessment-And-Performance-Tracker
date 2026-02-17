@@ -4,7 +4,7 @@
 const POLLING_INTERVAL = 30000; // 30 seconds
 
 // Hardcoded production URL to ensure it works even if .env fails
-const PROD_URL = 'https://student-assessment-and-performance-tracker-production.up.railway.app';
+const PROD_URL = 'https://optimistic-solace-production-f034.up.railway.app';
 const LOCAL_URL = 'http://localhost:8085';
 
 // Determine logic: 
