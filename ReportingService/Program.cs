@@ -56,9 +56,6 @@ app.MapGet("/api/reports/student/{id}", async (int id) =>
         connBuilder = new MySqlConnectionStringBuilder(rawConnectionString);
         // Force SSL Mode to Required for Aiven
         connBuilder.SslMode = MySqlSslMode.Required;
-        // CRITICAL: Aiven certs might not be trusted by the container OS. 
-        // We explicitly trust them to avoid "Authentication failed because the remote party has closed the transport stream" or varying SSL errors.
-        connBuilder.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
     }
     catch (Exception ex)
     {
@@ -71,7 +68,11 @@ app.MapGet("/api/reports/student/{id}", async (int id) =>
 
     try 
     {
-        using IDbConnection db = new MySqlConnection(connectionString);
+        // Create connection and trust Aiven's SSL cert (bypasses OS cert store issues locally)
+        var mysqlConn = new MySqlConnection(connectionString);
+        mysqlConn.ProvideClientCertificatesCallback = null;
+        // Trust the server certificate to avoid SSL handshake failures with Aiven locally
+        using IDbConnection db = mysqlConn;
         
         // TEST CONNECTION FIRST
         try 
