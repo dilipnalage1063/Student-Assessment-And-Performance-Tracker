@@ -15,39 +15,37 @@ public class NotificationService {
     @Autowired
     private SMSService smsService;
 
-    @Async
-    public void sendPerformanceNotifications(Mark mark) {
+    @Async("taskExecutor")
+    public void sendPerformanceNotifications(com.sapt.dto.NotificationDTO dto) {
+        long startTime = System.currentTimeMillis();
         try {
-            User student = mark.getStudent();
-            String subjectName = mark.getSubject().getName();
-            String assessmentName = mark.getAssessment().getName();
-            String grade = mark.getGrade();
-            String trend = mark.getStatus();
-            double obtained = mark.getObtainedMarks();
-            double total = mark.getAssessment().getTotalMarks();
-
-            String subject = "Performance Update: " + subjectName + " - " + assessmentName;
+            System.out.println("Async Notification Task Started for: " + dto.getStudentName() + " at " + java.time.LocalDateTime.now());
+            
+            String subject = "Performance Update: " + dto.getSubjectName() + " - " + dto.getAssessmentName();
 
             // 1. Send Email to Student
-            if (student.getEmail() != null && !student.getEmail().isEmpty()) {
-                String studentHtml = generateHtmlTemplate(student.getName(), assessmentName, subjectName, obtained, total, grade, trend, "Student");
-                emailService.sendEmail(student.getEmail(), subject, studentHtml);
+            if (dto.getStudentEmail() != null && !dto.getStudentEmail().isEmpty()) {
+                String studentHtml = generateHtmlTemplate(dto.getStudentName(), dto.getAssessmentName(), dto.getSubjectName(), dto.getObtainedMarks(), dto.getTotalMarks(), dto.getGrade(), dto.getTrend(), "Student");
+                emailService.sendEmail(dto.getStudentEmail(), subject, studentHtml);
             }
 
             // 2. Send Email to Parent
-            if (student.getParentsEmail() != null && !student.getParentsEmail().isEmpty()) {
-                String parentHtml = generateHtmlTemplate(student.getName(), assessmentName, subjectName, obtained, total, grade, trend, "Parent");
-                emailService.sendEmail(student.getParentsEmail(), subject, parentHtml);
+            if (dto.getParentEmail() != null && !dto.getParentEmail().isEmpty()) {
+                String parentHtml = generateHtmlTemplate(dto.getStudentName(), dto.getAssessmentName(), dto.getSubjectName(), dto.getObtainedMarks(), dto.getTotalMarks(), dto.getGrade(), dto.getTrend(), "Parent");
+                emailService.sendEmail(dto.getParentEmail(), subject, parentHtml);
             }
 
             // 3. Send SMS to Parent
-            String parentMobile = student.getParentsMobile();
+            String parentMobile = dto.getParentMobile();
             if (parentMobile != null && !parentMobile.trim().isEmpty()) {
                 String smsContent = String.format(
                         "Tracker Alert: %s scored %.1f/%.1f in %s. Grade: %s. Trend: %s.",
-                        student.getName(), obtained, total, assessmentName, grade, trend);
+                        dto.getStudentName(), dto.getObtainedMarks(), dto.getTotalMarks(), dto.getAssessmentName(), dto.getGrade(), dto.getTrend());
                 smsService.sendSMS(parentMobile, smsContent);
             }
+            
+            long duration = System.currentTimeMillis() - startTime;
+            System.out.println("Async Notification Task Completed in " + duration + "ms.");
 
         } catch (Exception e) {
             System.err.println("CRITICAL: Error in NotificationService: " + e.getMessage());

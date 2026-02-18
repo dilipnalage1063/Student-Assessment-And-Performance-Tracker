@@ -52,8 +52,24 @@ public class MarkService {
 
         Mark savedMark = markRepository.save(mark);
 
-        // 3. Send Notifications (Async)
-        notificationService.sendPerformanceNotifications(savedMark);
+        // 3. Send Notifications (Async) - safe copy to DTO
+        try {
+            com.sapt.dto.NotificationDTO dto = new com.sapt.dto.NotificationDTO(
+                student.getName(),
+                student.getEmail(),
+                student.getParentsEmail(),
+                student.getParentsMobile(),
+                subject.getName(),
+                assessment.getName(),
+                mark.getGrade(),
+                mark.getStatus(),
+                mark.getObtainedMarks(),
+                assessment.getTotalMarks()
+            );
+            notificationService.sendPerformanceNotifications(dto);
+        } catch (Exception e) {
+            System.err.println("Warning: Failed to initiate notification task: " + e.getMessage());
+        }
 
         return savedMark;
     }
