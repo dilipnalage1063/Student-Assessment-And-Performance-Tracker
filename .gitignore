@@ -19,15 +19,26 @@ dist/
 .env.test.local
 .env.production.local
 
+# Log files
+*.log
+backend/build_output*.txt
+
 # IDEs
 .vscode/
 .idea/
+.classpath
+.factorypath
+.project
+.settings/
 *.swp
 *.swo
 .DS_Store
 
-# Log files
-*.log
+# Java specific
+backend/mvn.bat
+
+# Sample data
+student_marks_dummy.csv
 
 # .NET / C#
 bin/
