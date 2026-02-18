@@ -33,4 +33,16 @@ public class SaptApplication {
 			}
 		};
 	}
+    @Bean(name = "taskExecutor")
+    public java.util.concurrent.Executor taskExecutor() {
+        org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor executor = new org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(10); // Start with more threads
+        executor.setMaxPoolSize(50); // Allow scaling up for large batches
+        executor.setQueueCapacity(500); // Buffer more tasks (enough for a whole grade)
+        executor.setThreadNamePrefix("Async-");
+        // If queue is full, run in main thread instead of discarding (prevents data loss)
+        executor.setRejectedExecutionHandler(new java.util.concurrent.ThreadPoolExecutor.CallerRunsPolicy());
+        executor.initialize();
+        return executor;
+    }
 }

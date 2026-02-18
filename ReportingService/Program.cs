@@ -49,14 +49,25 @@ app.MapGet("/api/reports/student/{id}", async (int id) =>
         return Results.Problem("DB_CONNECTION_STRING environment variable or configuration is missing.");
     }
 
-    // Ensure we are compatible with Aiven's requirement but also don't fail on strict SSL verification if certs are missing in container
-    string connectionString = rawConnectionString;
-    if (!connectionString.Contains("SslMode", StringComparison.OrdinalIgnoreCase))
+    // Use Builder to safely parse and modify the connection string
+    MySqlConnectionStringBuilder connBuilder;
+    try 
     {
-        connectionString += ";SslMode=Required;"; 
+        connBuilder = new MySqlConnectionStringBuilder(rawConnectionString);
+        // Force SSL Mode to Required for Aiven
+        connBuilder.SslMode = MySqlSslMode.Required;
+        // CRITICAL: Aiven certs might not be trusted by the container OS. 
+        // We explicitly trust them to avoid "Authentication failed because the remote party has closed the transport stream" or varying SSL errors.
+        connBuilder.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
+    }
+    catch (Exception ex)
+    {
+         Console.WriteLine($"[CRITICAL] Failed to parse DB_CONNECTION_STRING: {ex.Message}");
+         return Results.Problem($"Invalid DB Configuration: {ex.Message}");
     }
 
-    Console.WriteLine($"[INFO] Connecting to Database: {connectionString.Split(';').FirstOrDefault(p => p.StartsWith("Server"))}...");
+    string connectionString = connBuilder.ToString();
+    Console.WriteLine($"[INFO] Connecting to Database: Host={connBuilder.Server}, Port={connBuilder.Port}, Database={connBuilder.Database}, SslMode={connBuilder.SslMode}");
 
     try 
     {
@@ -71,7 +82,10 @@ app.MapGet("/api/reports/student/{id}", async (int id) =>
         catch (MySqlException ex)
         {
             Console.WriteLine($"[ERROR] Database Connection Failed: {ex.Message}");
-            return Results.Problem($"Database Connection Failed: {ex.Message}. Check your Railway Variables.");
+            // Log inner exception if exists
+            if (ex.InnerException != null) Console.WriteLine($"[ERROR] Inner: {ex.InnerException.Message}");
+            
+            return Results.Problem($"Database Connection Failed: {ex.Message}. CHECK SERVER LOGS. Host used: {connBuilder.Server}");
         }
 
         var student = await db.QueryFirstOrDefaultAsync<StudentDto>("SELECT name, department FROM users WHERE id = @id", new { id });

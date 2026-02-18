@@ -32,15 +32,15 @@ public class EmailService {
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public void sendEmail(String to, String subject, String body) {
-        // 1. Try Gmail (Local / SMTP) - Priority if configured
-        if (gmailPassword != null && !gmailPassword.isEmpty() && !"YOUR_GMAIL_APP_PASSWORD_HERE".equals(gmailPassword)) {
-            sendViaGmail(to, subject, body);
+        // 1. Try Resend (Production / Preferred) - Priority if valid key exists
+        if (resendApiKey != null && !resendApiKey.isEmpty() && resendApiKey.startsWith("re_")) {
+            sendViaResend(to, subject, body);
             return;
         }
 
-        // 2. Try Resend (Production / HTTP) - Fallback or Primary if Gmail missing
-        if (resendApiKey != null && !resendApiKey.isEmpty() && resendApiKey.startsWith("re_")) {
-            sendViaResend(to, subject, body);
+        // 2. Try Gmail (Local / SMTP) - Fallback
+        if (gmailPassword != null && !gmailPassword.isEmpty() && !"YOUR_GMAIL_APP_PASSWORD_HERE".equals(gmailPassword)) {
+            sendViaGmail(to, subject, body);
             return;
         }
 
@@ -58,9 +58,9 @@ public class EmailService {
             helper.setSubject(subject);
             helper.setText(body, true); // true = HTML
             javaMailSender.send(message);
-            System.out.println("SUCCESS: Email sent via Gmail.");
+            System.out.println("SUCCESS: Email sent via Gmail to " + to);
         } catch (Exception e) {
-            System.err.println("ERROR: Gmail send failed. " + e.getMessage());
+            System.err.println("ERROR: Gmail send failed to " + to + ". " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -84,13 +84,13 @@ public class EmailService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() >= 200 && response.statusCode() < 300) {
-                 System.out.println("SUCCESS: Email sent via Resend API.");
+                 System.out.println("SUCCESS: Email sent via Resend API to " + to);
             } else {
-                 System.err.println("ERROR: Resend API failed: " + response.body());
+                 System.err.println("ERROR: Resend API failed for " + to + ": " + response.body());
             }
 
         } catch (Exception e) {
-            System.err.println("ERROR: Resend send failed. " + e.getMessage());
+            System.err.println("ERROR: Resend send failed to " + to + ". " + e.getMessage());
             e.printStackTrace();
         }
     }

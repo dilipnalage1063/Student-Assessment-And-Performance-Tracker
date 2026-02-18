@@ -55,7 +55,7 @@ public class SMSService {
                     new PhoneNumber(fromNumber),
                     messageText).create();
 
-            System.out.println("Twilio SMS sent successfully! SID: " + message.getSid());
+            System.out.println("Twilio SMS sent successfully to " + formattedTo + "! SID: " + message.getSid());
             System.out.println("Status: " + message.getStatus());
         } catch (Exception e) {
             System.err.println("CRITICAL: Failed to send Twilio SMS to " + mobileNumber);

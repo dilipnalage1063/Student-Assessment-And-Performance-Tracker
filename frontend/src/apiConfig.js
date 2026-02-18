@@ -5,8 +5,12 @@ const LOCAL_URL = 'http://localhost:8080'; // Default backend port
 
 const getBaseUrl = () => {
     // 1. Prioritize Environment Variable (Vercel/Railway)
-    if (import.meta.env.VITE_API_BASE_URL) {
-        return import.meta.env.VITE_API_BASE_URL;
+    let url = import.meta.env.VITE_API_BASE_URL;
+    if (url) {
+        if (!url.startsWith('http')) {
+            url = `https://${url}`;
+        }
+        return url;
     }
     // 2. Fallback to Localhost for development
     return LOCAL_URL;
@@ -21,5 +25,11 @@ export const endpoints = {
     users: `${API_BASE_URL}/api/users`,
     subjects: `${API_BASE_URL}/api/subjects`,
     // Reporting Service URL
-    report: (studentId) => `${import.meta.env.VITE_REPORTING_URL || 'http://localhost:5174'}/api/reports/student/${studentId}`,
+    report: (studentId) => {
+        let url = import.meta.env.VITE_REPORTING_URL || 'http://localhost:5174';
+        if (!url.startsWith('http') && !url.includes('localhost')) {
+            url = `https://${url}`;
+        }
+        return `${url}/api/reports/student/${studentId}`;
+    },
 };
