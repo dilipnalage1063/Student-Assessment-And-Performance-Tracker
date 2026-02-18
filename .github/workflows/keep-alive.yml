@@ -11,10 +11,8 @@ jobs:
     steps:
       - name: Ping Backend and Database
         run: |
-          curl -f https://student-assessment-and-performance-tracker-production.up.railway.app/health || echo "Backend ping failed"
+          curl -f https://sapt-backend-production.up.railway.app/health || echo "Backend ping failed"
       
-      - name: Ping Frontend (Placeholder - replace with your Vercel URL)
+      - name: Ping Frontend
         run: |
-          # If you have a live frontend URL, add it here like:
-          # curl -f https://your-frontend.vercel.app || echo "Frontend ping failed"
-          echo "Frontend ping step skipped. Please add your Vercel URL manually if needed."
+          curl -f https://student-assessment-and-performance.vercel.app/ || echo "Frontend ping failed"

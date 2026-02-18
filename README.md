@@ -1,96 +1,97 @@
-# Student Assessment and Performance Tracker (SAPT)
+# 🎓 Student Assessment & Performance Tracker (SAPT)
 
-A comprehensive web application designed to track, manage, and analyze student academic performance. This project features role-based access for Admins, Faculty, and Students, providing a streamlined workflow for assessment management and real-time notifications.
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20Now-brightgreen?style=for-the-badge&logo=vercel)](https://student-assessment-and-performance.vercel.app/)
+[![Backend](https://img.shields.io/badge/Backend-Spring%20Boot-red?style=for-the-badge&logo=springboot)](https://sapt-backend-production.up.railway.app/)
+[![Reporting](https://img.shields.io/badge/Microservice-.NET%209-blue?style=for-the-badge&logo=dotnet)](https://reporting-service-production-5bbb.up.railway.app/)
+
+A professional, full-stack microservice architecture designed to automate academic performance tracking, reporting, and real-time parent-teacher communication.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Live Environment
+- **Frontend:** [SAPT Web Portal](https://student-assessment-and-performance.vercel.app/)
+- **REST API:** [Backend Service](https://sapt-backend-production.up.railway.app/health)
+- **Report Service:** [.NET PDF Engine](https://reporting-service-production-5bbb.up.railway.app/)
 
-### 🔐 Multi-Role Authentication
-- **Admin**: Full authority to manage users (Faculty/Students), departments, and system settings.
-- **Faculty**: Dedicated dashboard to input marks, manage subjects, and monitor student progress.
-- **Student**: Personalized portal to view marks, tracking academic growth through interactive performance graphs.
+---
 
-### 📊 Performance Analytics
-- Visual representation of student marks using dynamic charts.
-- Semester-wise and subject-wise performance tracking.
+## ✨ Key Features
 
-### ✉️ Automated Notifications
-- **Email Integration**: Automated email notifications for registrations and performance updates using Spring Mail (SMTP).
-- **SMS Automation**: Real-time SMS alerts for important academic updates via Twilio API.
+### 🔐 Role-Based Access Control (RBAC)
+- **Admin Dashboard**: System-wide control for managing User (Faculty/Student) lifecycles and departmental configurations.
+- **Faculty Portal**: Specialized interface for academic mark entry, subject management, and student trend analysis.
+- **Student Dashboard**: Data-driven portal featuring performance visualizations and instant report downloads.
 
-### 🌑 Modern UI/UX
-- Responsive design tailored for all screen sizes.
-- **Dark/Light Mode**: Seamlessly toggle between themes for a comfortable viewing experience.
+### 📊 Advanced Performance Analytics
+- **Dynamic Charting**: Real-time visualization of academic progress using Chart.js.
+- **Microservice Reporting**: Dedicated .NET Core engine for generating high-fidelity, professional academic PDF reports.
+
+### 🤖 Intelligent Automation
+- **Async Messaging**: High-throughput notification engine capable of handling 500+ concurrent tasks without latency.
+- **Dual-Channel Alerts**: Automated SMS (Twilio) and Email (Resend/Gmail) notifications for every mark entry, keeping parents instantly informed of student progress.
+
+---
+
+## 🏗️ System Architecture
+
+```mermaid
+graph TD
+    User((User/Parent)) -->|React Web App| Frontend[Vite + React.js]
+    Frontend -->|REST API| Backend[Spring Boot Service]
+    Backend -->|Async Task| Notification[Notification Engine]
+    Notification -->|SMS| Twilio[Twilio API]
+    Notification -->|Email| Resend[Resend/SMTP API]
+    Backend -->|Data| DB[(Aiven MySQL)]
+    Frontend -->|PDF Request| ReportService[.NET Reporting Microservice]
+    ReportService -->|Query| DB
+```
 
 ---
 
 ## 🛠️ Technology Stack
 
-### Backend
-- **Java 21**
-- **Spring Boot 3.2.2** (Spring Data JPA, Spring Web, Spring Mail)
-- **MySQL** (Relational Database)
-- **Maven** (Dependency Management)
-- **Twilio SDK** (SMS Notifications)
+### Core Services
+- **Primary Backend**: Java 21, Spring Boot 3.2.x (JPA, Security, Async)
+- **Reporting Microservice**: .NET 9 Core, Dapper ORM, QuestPDF
+- **Frontend Engine**: React.js, Vite, Chart.js, Lucide Icons
+- **Database**: MySQL (Aiven Managed Cloud)
 
-### Frontend
-- **React.js** (Functional Components & Hooks)
-- **Vite** (Optimized Build Tool)
-- **Vanilla CSS** (Custom Styling & Glassmorphism)
-- **Chart.js** (Data Visualization)
+### Infrastructure & APIs
+- **Cloud Hosting**: Railway (Backend), Vercel (Frontend)
+- **Automation**: Twilio (SMS), Resend (Transactional Email)
+- **Security**: Environment-driven secret management, CORS protection
 
 ---
 
-## ⚙️ Setup & Installation
+## ⚙️ Local Setup & Development
 
 ### Prerequisites
-- JDK 21+
+- Java 21 JDK
+- .NET 9 SDK
 - Node.js & npm
-- MySQL Server
 
 ### 1. Database Configuration
-1. Create a database named `school_tracker_db`.
-2. Update the credentials in `backend/src/main/resources/application.properties`:
-   ```properties
-   spring.datasource.username=YOUR_USERNAME
-   spring.datasource.password=YOUR_PASSWORD
-   ```
+Local development uses a shared cloud database by default. If using a local DB:
+1. Create `school_tracker_db`.
+2. Configure credentials in `backend/src/main/resources/application-secret.properties`.
 
-### 2. Backend Setup
-1. Navigate to the `backend` folder.
-2. Run the application:
-   ```cmd
-   mvnw spring-boot:run
-   ```
+### 2. Service Initialization
+Run the following scripts from the root directory to start the ecosystem:
 
-### 3. Frontend Setup
-1. Navigate to the `frontend` folder.
-2. Install dependencies:
-   ```cmd
-   npm install
-   ```
-3. Start the development server:
-   ```cmd
-   npm run dev
-   ```
+| Service | Command |
+| :--- | :--- |
+| **Backend** | `.\start-backend.bat` |
+| **Frontend** | `.\start-frontend.bat` |
+| **Reporting** | `.\start-reporting-service.bat` |
 
 ---
 
-## 📂 Project Structure
-- `backend/`: Spring Boot application containing controllers, services, models, and repositories.
-- `frontend/`: React application built with Vite, including components for different user roles.
-- `ReportingService/`: Dedicated microservice for generating academic reports.
-
----
-
-## 👨‍💻 Author
+## 👨‍💻 Developed By
 **Dilip Nalage**
-- [GitHub](https://github.com/dilipnalage1063)
-- [LinkedIn](https://www.linkedin.com/in/dilip-nalage-73889828a/)
+- [GitHub](https://github.com/dilipnalage1063) | [LinkedIn](https://www.linkedin.com/in/dilip-nalage-73889828a/)
 
 **Vinit Darade**
-- [GitHub](https://github.com/VinitDarade12)
-- [LinkedIn](https://www.linkedin.com/in/vinitdarade/)
-  
-*Developed as part of the CDAC Project Curriculum.*
+- [GitHub](https://github.com/VinitDarade12) | [LinkedIn](https://www.linkedin.com/in/vinitdarade/)
+
+---
+*Developed as part of the CDAC Professional Project Curriculum.*
