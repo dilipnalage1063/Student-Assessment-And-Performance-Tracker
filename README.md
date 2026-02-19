@@ -28,8 +28,6 @@ Traditional academic tracking often relies on fragmented manual records, leading
 
 ## 🏗️ System Architecture
 
-![Architecture Diagram](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/architecture_diagram.png)
-
 > [!NOTE]
 > The system follows a distributed microservice pattern with a Java/Spring Boot core and a specialized .NET microservice for document processing.
 
@@ -88,21 +86,6 @@ graph TD
 - **Hosting**: **Railway** (Backend Services), **Vercel** (Frontend Deployment)
 - **Communication APIs**: **Twilio** (Global SMS), **Resend** (Transactional Email Automation)
 - **Security**: Environment-driven secret management, CORS protection, JWT-based security principles
-
----
-
-## 📸 Screenshots Showcase
-
-````carousel
-![Admin Dashboard](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/screenshots/admin_dashboard.png)
-<!-- slide -->
-![Faculty Performance Entry](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/screenshots/faculty_entry.png)
-<!-- slide -->
-![Student Analytics](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/screenshots/student_analytics.png)
-````
-
-> [!TIP]
-> Use the carousel above to view key interfaces of the SAPT platform.
 
 ---
 
