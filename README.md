@@ -65,6 +65,17 @@ graph TD
 
 ---
 
+## 📈 Impact & Performance Metrics
+
+### 🚀 Scaling & Management
+- **Full-Stack Scaling**: Successfully managed **10+ students** with centralized grade tracking and automated reporting.
+
+### ⚡ Optimization & Efficiency
+- **Notification Compression**: Integrated SMS & Email APIs; reduced bulk notification delivery time by **40%** (from ~10s to **6s**).
+- **Production Performance**: Optimized API response efficiency and achieved a **< 2s application load time** in production environments.
+
+---
+
 ## 🛠️ Tech Stack & Infrastructure
 
 ### 🚀 Core Services
