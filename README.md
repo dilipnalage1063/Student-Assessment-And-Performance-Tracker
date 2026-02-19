@@ -15,25 +15,25 @@ A professional, full-stack microservice architecture designed to automate academ
 
 ---
 
-## ✨ Key Features
+## 💡 Problem Statement
+Traditional academic tracking often relies on fragmented manual records, leading to:
+- **Delayed Feedback**: Parents and students often wait until the end of the term to see performance reports.
+- **Manual Errors**: Hand-calculating marks and manually drafting reports is prone to inaccuracies.
+- **Data Silos**: Performance data isn't easily accessible for long-term trend analysis.
+- **Communication Gaps**: Teachers lack a streamlined, automated way to keep parents updated on daily progress.
 
-### 🔐 Role-Based Access Control (RBAC)
-- **Admin Dashboard**: System-wide control for managing User (Faculty/Student) lifecycles and departmental configurations.
-- **Faculty Portal**: Specialized interface for academic mark entry, subject management, and student trend analysis.
-- **Student Dashboard**: Data-driven portal featuring performance visualizations and instant report downloads.
-
-### 📊 Advanced Performance Analytics
-- **Dynamic Charting**: Real-time visualization of academic progress using Chart.js.
-- **Microservice Reporting**: Dedicated .NET Core engine for generating high-fidelity, professional academic PDF reports.
-
-### 🤖 Intelligent Automation
-- **Async Messaging**: High-throughput notification engine capable of handling 500+ concurrent tasks without latency.
-- **Dual-Channel Alerts**: Automated SMS (Twilio) and Email (Resend/Gmail) notifications for every mark entry, keeping parents instantly informed of student progress.
+**SAPT** solves these by centralizing data, automating report generation, and providing real-time notification channels.
 
 ---
 
 ## 🏗️ System Architecture
 
+![Architecture Diagram](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/architecture_diagram.png)
+
+> [!NOTE]
+> The system follows a distributed microservice pattern with a Java/Spring Boot core and a specialized .NET microservice for document processing.
+
+### Technical Flow
 ```mermaid
 graph TD
     User((User/Parent)) -->|React Web App| Frontend[Vite + React.js]
@@ -48,18 +48,50 @@ graph TD
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Key Features
 
-### Core Services
-- **Primary Backend**: Java 21, Spring Boot 3.2.x (JPA, Security, Async)
-- **Reporting Microservice**: .NET 9 Core, Dapper ORM, QuestPDF
-- **Frontend Engine**: React.js, Vite, Chart.js, Lucide Icons
-- **Database**: MySQL (Aiven Managed Cloud)
+### 🔐 Role-Based Access Control (RBAC)
+- **Admin Dashboard**: System-wide control for managing User (Faculty/Student) lifecycles and departmental configurations.
+- **Faculty Portal**: Specialized interface for academic mark entry, subject management, and student trend analysis.
+- **Student Dashboard**: Data-driven portal featuring performance visualizations and instant report downloads.
 
-### Infrastructure & APIs
-- **Cloud Hosting**: Railway (Backend), Vercel (Frontend)
-- **Automation**: Twilio (SMS), Resend (Transactional Email)
-- **Security**: Environment-driven secret management, CORS protection
+### 📊 Advanced Performance Analytics
+- **Dynamic Charting**: Real-time visualization of academic progress using **Chart.js**, providing intuitive data insights.
+- **Microservice Reporting**: Dedicated **.NET Core engine** for generating high-fidelity, professional academic PDF reports on-the-fly.
+
+### 🤖 Intelligent Automation & Communication
+- **Async Messaging**: High-throughput notification engine capable of handling **500+ concurrent tasks** without system latency.
+- **Dual-Channel Alerts**: Automated **SMS (Twilio)** and **Email (Resend)** notifications triggered for every mark entry, ensuring parents are always in the loop.
+
+---
+
+## 🛠️ Tech Stack & Infrastructure
+
+### 🚀 Core Services
+- **Primary Backend**: Java 21, **Spring Boot 3.2.x** (JPA, Security, Async, AOP)
+- **Reporting Microservice**: **.NET 9 Core**, Dapper ORM, QuestPDF (High-performance PDF generation)
+- **Frontend Engine**: **React.js**, Vite, Chart.js, Lucide Icons, Modern CSS/UX
+- **Database**: MySQL (Hosted on **Aiven Cloud** for high availability)
+
+### ☁️ Infrastructure & Cloud
+- **Hosting**: **Railway** (Backend Services), **Vercel** (Frontend Deployment)
+- **Communication APIs**: **Twilio** (Global SMS), **Resend** (Transactional Email Automation)
+- **Security**: Environment-driven secret management, CORS protection, JWT-based security principles
+
+---
+
+## 📸 Screenshots Showcase
+
+````carousel
+![Admin Dashboard](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/screenshots/admin_dashboard.png)
+<!-- slide -->
+![Faculty Performance Entry](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/screenshots/faculty_entry.png)
+<!-- slide -->
+![Student Analytics](https://github.com/dilipnalage1063/Student-Assessment-And-Performance-Tracker/raw/main/screenshots/student_analytics.png)
+````
+
+> [!TIP]
+> Use the carousel above to view key interfaces of the SAPT platform.
 
 ---
 
